@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var program = require('commander');
 var Slack = require('node-slack-upload');
 var ProgressBar = require('progress');
