@@ -1,14 +1,16 @@
 var program = require('commander');
-var config = require('./config');
 var Slack = require('node-slack-upload');
 var ProgressBar = require('progress');
 var fs = require('fs');
+var rawConfig = fs.readFileSync('config.json');
+var config = JSON.parse(rawConfig);
 var slack = new Slack(config.token);
 
 program
   .arguments('<file>')
   .option('-t --target <target>', 'target to post message to (channel, user)')
   .option('-c --comment <comment>', 'comment for the file post')
+  .option('-T --token <token>', 'slack token')
   .action(function (file) {
     let defaultTarget = config.defaultTarget;
     let comment = 'Uploaded with Caragit';
@@ -60,5 +62,26 @@ function no() {
     if (err) throw err
   });
 }
+
+program
+  .command('set')
+  .action(function () {
+    let changed = false;
+    if (program.token != undefined) {
+      config.token = program.token;
+      changed = true;
+    }
+    if (program.target != undefined) {
+      config.defaultTarget = program.target;
+      changed = true;
+    }
+
+    if (changed) {
+      fs.writeFileSync('config.json', JSON.stringify(config));
+      console.log('Updated');
+    } else {
+      console.log('Nothing to update');
+    }
+  });
 
 program.parse(process.argv);
