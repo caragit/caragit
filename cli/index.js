@@ -61,7 +61,7 @@ program.command('no').action(no);
 function no() {
   var player = require('play-sound')(opts = {});
 
-  player.play('nooo.mp3', function(err){
+  player.play(path.resolve(__dirname, 'nooo.mp3'), function(err){
     if (err) throw err
   });
 }
