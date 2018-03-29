@@ -4,7 +4,8 @@ var program = require('commander');
 var Slack = require('node-slack-upload');
 var ProgressBar = require('progress');
 var fs = require('fs');
-var rawConfig = fs.readFileSync('config.json');
+var path = require('path');
+var rawConfig = fs.readFileSync(path.resolve(__dirname, 'config.json'));
 var config = JSON.parse(rawConfig);
 var slack = new Slack(config.token);
 
@@ -79,7 +80,7 @@ program
     }
 
     if (changed) {
-      fs.writeFileSync('config.json', JSON.stringify(config));
+      fs.writeFileSync(path.resolve(__dirname, 'config.json'), JSON.stringify(config));
       console.log('Updated');
     } else {
       console.log('Nothing to update');
