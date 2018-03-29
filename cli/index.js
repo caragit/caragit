@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 var program = require('commander');
 var config = require('./config');
 var Slack = require('node-slack-upload');
@@ -52,5 +51,14 @@ program
       }
     });
   })
+
+program.command('no').action(no);
+function no() {
+  var player = require('play-sound')(opts = {});
+
+  player.play('nooo.mp3', function(err){
+    if (err) throw err
+  });
+}
 
 program.parse(process.argv);
