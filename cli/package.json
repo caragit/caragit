@@ -1,6 +1,6 @@
 {
   "name": "caragit",
-  "version": "1.1.0",
+  "version": "1.3.3",
   "description": "A command-line tool to push file snippets to slack",
   "main": "index.js",
   "scripts": {
@@ -14,6 +14,7 @@
   "dependencies": {
     "commander": "^2.15.1",
     "node-slack-upload": "^1.2.1",
+    "play-sound": "^1.1.2",
     "progress": "^2.0.0",
     "superagent": "^3.8.2"
   }
