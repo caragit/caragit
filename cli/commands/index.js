@@ -25,7 +25,13 @@ const commands = [
   {
     name: 'Set',
     action: actionSet,
-    command: 'set'
+    command: 'set',
+    options: [
+      {
+        args: '-a --slack-token <slackToken>',
+        message: 'Your slack token'
+      }
+    ]
   }
 ];
 
