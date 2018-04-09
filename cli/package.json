@@ -1,6 +1,6 @@
 {
   "name": "caragit",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "A command-line tool to push file snippets to slack",
   "main": "index.js",
   "scripts": {
