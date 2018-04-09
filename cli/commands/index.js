@@ -1,4 +1,5 @@
 var actionPostToSlack = require('./postSlack');
+var actionNooo = require('./nooo.js');
 
 const commands = [
   {
@@ -14,6 +15,11 @@ const commands = [
         message: 'comment for the file post'
       }
     ]
+  },
+  {
+    name: 'Nooo',
+    action: actionNooo,
+    command: 'no'
   }
 ];
 

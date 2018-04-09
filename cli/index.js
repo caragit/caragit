@@ -1,25 +1,23 @@
 #!/usr/bin/env node
 var commands = require('./commands/index');
 var program = require('commander');
+var path = require('path');
 
 program
   .arguments('<file>');
 
 commands.forEach(function (command) {
-  command.options.forEach(function (optionArg) {
-    program.option(optionArg.args, optionArg.message);
-  })
-  program.action(command.action);
+  if (command.options != null && command.options.length > 0) {
+    command.options.forEach(function (optionArg) {
+      program.option(optionArg.args, optionArg.message);
+    })
+  }
+  if (command.command != null && command.command != '') {
+    program.command(command.command).action(command.action);
+  } else {
+    program.action(command.action);
+  }
 });
-
-program.command('no').action(no);
-function no() {
-  var player = require('play-sound')(opts = {});
-
-  player.play(path.resolve(__dirname, 'nooo.mp3'), function(err){
-    if (err) throw err
-  });
-}
 
 program
   .command('set')
