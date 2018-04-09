@@ -19,25 +19,4 @@ commands.forEach(function (command) {
   }
 });
 
-program
-  .command('set')
-  .action(function () {
-    let changed = false;
-    if (program.token != undefined) {
-      config.token = program.token;
-      changed = true;
-    }
-    if (program.target != undefined) {
-      config.defaultTarget = program.target;
-      changed = true;
-    }
-
-    if (changed) {
-      fs.writeFileSync(path.resolve(__dirname, 'config.json'), JSON.stringify(config));
-      console.log('Updated');
-    } else {
-      console.log('Nothing to update');
-    }
-  });
-
 program.parse(process.argv);

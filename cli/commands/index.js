@@ -1,5 +1,6 @@
 var actionPostToSlack = require('./postSlack');
 var actionNooo = require('./nooo.js');
+var actionSet = require('./set');
 
 const commands = [
   {
@@ -20,6 +21,11 @@ const commands = [
     name: 'Nooo',
     action: actionNooo,
     command: 'no'
+  },
+  {
+    name: 'Set',
+    action: actionSet,
+    command: 'set'
   }
 ];
 
