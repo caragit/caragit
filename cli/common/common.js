@@ -13,12 +13,18 @@ const emptyConfig = {
 function getConfig () {
   switch (process.platform) {
     case 'win32':
-      fsExtra.ensureFileSync(winPath);
+      let exists = fsExtra.pathExistsSync(winPath);
+      if (!exists) {
+        fsExtra.outputJsonSync(winPath, emptyConfig);
+      }
       return fsExtra.readJsonSync(winPath, function (err) {
         if (err) throw err;
       });
     case 'darwin':
-      fsExtra.ensureFileSync(macOSPath);
+      let macExists = fsExtra.ensureFileSync(macOSPath);
+      if (!macExists) {
+        fsExtra.outputJsonSync(macOSPath, emptyConfig);
+      }
       return fsExtra.readJsonSync(macOSPath, function (err) {
         if (err) throw err;
       });
@@ -31,12 +37,10 @@ function getConfig () {
 function updateConfig (config) {
   switch (process.platform) {
     case 'win32':
-      fsExtra.ensureFileSync(winPath);
-      fsExtra.writeJsonSync(winPath, config);
+      fsExtra.outputJsonSync(winPath, config);
       return true;
     case 'darwin':
-      fsExtra.ensureFileSync(macOSPath);
-      fsExtra.writeJsonSync(macOSPath, config);
+      fsExtra.outputJsonSync(macOSPath, config);
       return true;
     default:
       console.log('platform not supported');
