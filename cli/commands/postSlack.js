@@ -1,11 +1,10 @@
-var config = require('./../config');
-
 var program = require('commander');
 var fs = require('fs');
 var Slack = require('node-slack-upload');
 var ProgressBar = require('progress');
-
-var slack = new Slack(config.token);
+var common = require('../common/common.js');
+var config = common.getConfig();
+var slack = new Slack(config.slackToken);
 
 function postToSlack (file) {
   let defaultTarget = config.defaultTarget;

@@ -1,14 +1,14 @@
 var program = require('commander');
 var path = require('path');
 var fs = require('fs');
-var rawConfig = fs.readFileSync(path.resolve(__dirname, '../config.json'));
-var config = JSON.parse(rawConfig);
-
+var common = require('../common/common.js')
 
 function set () {
-    let changed = false;
-    if (program.token != undefined) {
-      config.token = program.token;
+  let config = common.getConfig();
+  let changed = false;
+  if (config != null) {
+    if (program.slackToken != undefined) {
+      config.slackToken = program.slackToken;
       changed = true;
     }
     if (program.target != undefined) {
@@ -17,11 +17,18 @@ function set () {
     }
 
     if (changed) {
-      fs.writeFileSync(path.resolve(__dirname, '../config.json'), JSON.stringify(config));
-      console.log('Updated');
+      let updated = common.updateConfig(config);
+      if (updated) {
+        console.log('Updated');
+      } else {
+        console.log('Unable to update config');
+      }
     } else {
       console.log('Nothing to update');
     }
+  } else {
+    console.log('An unknown error occured @ getConfig();');
+  }
 }
 
 module.exports = set;
