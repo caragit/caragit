@@ -1,61 +1,16 @@
 #!/usr/bin/env node
-
+var commands = require('./commands/index');
 var program = require('commander');
-var Slack = require('node-slack-upload');
-var ProgressBar = require('progress');
-var fs = require('fs');
-var path = require('path');
-var rawConfig = fs.readFileSync(path.resolve(__dirname, 'config.json'));
-var config = JSON.parse(rawConfig);
-var slack = new Slack(config.token);
 
 program
-  .arguments('<file>')
-  .option('-t --target <target>', 'target to post message to (channel, user)')
-  .option('-c --comment <comment>', 'comment for the file post')
-  .option('-T --token <token>', 'slack token')
-  .action(function (file) {
-    let defaultTarget = config.defaultTarget;
-    let comment = 'Uploaded with Caragit';
+  .arguments('<file>');
 
-    if (program.target != undefined) {
-      defaultTarget = program.target;
-    }
-    if (program.comment != undefined) {
-      comment = program.comment;
-    }
-
-    let fileSize = fs.statSync(file).size;
-    let fileStream = fs.createReadStream(file);
-    let barOpts = {
-      width: 20,
-      total: fileSize,
-      clear: true
-    };
-    let bar = new ProgressBar('uploading [:bar] :percent :etas', barOpts);
-
-    fileStream.on('data', function (chunk) {
-      bar.tick(chunk.length);
-    });
-
-    let splitFile = file.split('.');
-    let fileType = splitFile[splitFile.length - 1];
-
-    slack.uploadFile({
-      file: fileStream,
-      filetype: fileType,
-      title: file,
-      channels: defaultTarget,
-      initialComment: comment
-    }, function (err, data) {
-      if (err) {
-        console.log(err);
-      }
-      else {
-        console.log('Uploaded file details:', data.file.permalink);
-      }
-    });
+commands.forEach(function (command) {
+  command.options.forEach(function (optionArg) {
+    program.option(optionArg.args, optionArg.message);
   })
+  program.action(command.action);
+});
 
 program.command('no').action(no);
 function no() {
