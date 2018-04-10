@@ -3,14 +3,14 @@ var fsExtra = require('fs-extra');
 var os = require('os');
 
 var winPath = process.env.APPDATA + '/Caragit/config.json';
-var macOSPath = os.homedir() + './caragit/config.json';
+var macOSPath = os.homedir() + '/.caragit/config.json';
 
-const emptyConfig = { 
+const emptyConfig = {
   slackToken: '',
   defaultTarget: ''
 };
 
-function getConfig () {
+function getConfig() {
   switch (process.platform) {
     case 'win32':
       let exists = fsExtra.pathExistsSync(winPath);
@@ -30,7 +30,7 @@ function getConfig () {
   }
 }
 
-function updateConfig (config) {
+function updateConfig(config) {
   switch (process.platform) {
     case 'win32':
       fsExtra.outputJsonSync(winPath, config);

@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 var commands = require('./commands/index');
 var program = require('commander');
 var path = require('path');
