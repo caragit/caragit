@@ -3,7 +3,7 @@ var fsExtra = require('fs-extra');
 var os = require('os');
 
 var winPath = process.env.APPDATA + '/Caragit/config.json';
-var macOSPath = os + './caragit/config.json';
+var macOSPath = os.homedir() + './caragit/config.json';
 
 const emptyConfig = { 
   slackToken: '',
