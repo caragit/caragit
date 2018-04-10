@@ -17,17 +17,13 @@ function getConfig () {
       if (!exists) {
         fsExtra.outputJsonSync(winPath, emptyConfig);
       }
-      return fsExtra.readJsonSync(winPath, function (err) {
-        if (err) throw err;
-      });
+      return fsExtra.readJsonSync(winPath);
     case 'darwin':
-      let macExists = fsExtra.ensureFileSync(macOSPath);
+      let macExists = fsExtra.pathExistsSync(macOSPath);
       if (!macExists) {
         fsExtra.outputJsonSync(macOSPath, emptyConfig);
       }
-      return fsExtra.readJsonSync(macOSPath, function (err) {
-        if (err) throw err;
-      });
+      return fsExtra.readJsonSync(macOSPath);
     default:
       console.log('platform not supported');
       break;
